@@ -1,0 +1,24 @@
+{
+  "name": "hightable-blog",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "autoprefixer": "^10.4.12",
+    "next": "^12.3.1",
+    "postcss": "^8.4.18",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "tailwindcss": "^3.2.1"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.5",
+    "@types/react": "^18.0.22",
+    "typescript": "^4.8.4"
+  }
+}
