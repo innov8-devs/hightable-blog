@@ -1,0 +1,18 @@
+.error {
+  color: #eb3333;
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 100%;
+  margin: 0px 0 0 4px;
+}
+
+.cancel {
+  cursor: pointer;
+  margin: 0 0 0 10px;
+  transition: all 0.1s ease-in-out;
+}
+.cancel:hover {
+  transform: translateY(-1px);
+}

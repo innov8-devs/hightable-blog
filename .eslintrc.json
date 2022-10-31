@@ -37,7 +37,8 @@
     "no-duplicate-imports": "error",
     "no-self-compare": "error",
     "no-template-curly-in-string": "error",
-    "no-use-before-define": "off"
+    "no-use-before-define": "off",
+    "prettier/prettier": ["error", { "singleQuote": true, "useTabs": false }]
   },
   "globals": {
     "JSX": "readonly"

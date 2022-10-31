@@ -1,24 +1,80 @@
 {
-  "name": "hightable-blog",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
+  "name": "web",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
-    "dev": "next",
+    "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "lint": "next lint"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/innov8-devs/hightable-blog.git"
+  },
+  "author": "Vision Onyeaku",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/innov8-devs/hightable-blog/issues"
+  },
+  "homepage": "https://github.com/innov8-devs/hightable-blog#README",
   "dependencies": {
-    "autoprefixer": "^10.4.12",
-    "next": "^12.3.1",
-    "postcss": "^8.4.18",
+    "@apollo/client": "^3.5.6",
+    "@apollo/react-hooks": "^4.0.0",
+    "@bugsnag/js": "^7.14.1",
+    "@bugsnag/plugin-react": "^7.14.0",
+    "@chakra-ui/react": "^2.3.6",
+    "@emotion/styled": "^11.10.5",
+    "@fontsource/dm-serif-display": "^4.5.7",
+    "@fontsource/montserrat": "^4.5.11",
+    "@fortawesome/fontawesome-svg-core": "^6.1.1",
+    "@fortawesome/free-solid-svg-icons": "^6.1.1",
+    "@fortawesome/react-fontawesome": "^0.1.18",
+    "apollo-boost": "^0.4.9",
+    "apollo-upload-client": "^17.0.0",
+    "formik": "^2.2.9",
+    "framer-motion": "^7.6.2",
+    "graphql": "^16.1.0",
+    "jwt-decode": "^3.1.2",
+    "moment": "^2.29.1",
+    "next": "11.1.2",
+    "prop-types": "^15.8.1",
+    "pure-react-carousel": "^1.28.1",
     "react": "^18.2.0",
+    "react-apollo": "^3.1.5",
+    "react-avatar-edit": "^1.1.0",
+    "react-calendar": "^3.7.0",
+    "react-credit-cards": "^0.8.3",
     "react-dom": "^18.2.0",
-    "tailwindcss": "^3.2.1"
+    "react-icons": "^4.6.0",
+    "react-loading-skeleton": "^3.0.2",
+    "react-responsive-carousel": "^3.2.23",
+    "react-select": "^5.3.2",
+    "react-slideshow-image": "^3.6.0",
+    "storejars-react-toolkit": "^1.0.37",
+    "styled-components": "^5.3.6",
+    "yup": "^0.27.0"
   },
   "devDependencies": {
-    "@types/node": "^18.11.5",
-    "@types/react": "^18.0.22",
-    "typescript": "^4.8.4"
-  }
+    "@types/react": "17.0.2",
+    "@types/react-dom": "17.0.2",
+    "@types/react-infinite-scroller": "^1.2.3",
+    "@types/yup": "^0.26.27",
+    "@typescript-eslint/eslint-plugin": "4.0.1",
+    "@typescript-eslint/parser": "4.0.1",
+    "eslint": "^7.32.0",
+    "eslint-config-next": "^12.1.6",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.6.2",
+    "typescript": "^4.5.2"
+  },
+  "cacheDirectories": [
+    ".next/cache"
+  ],
+  "resolutions": {
+    "@types/react": "17.0.2",
+    "@types/react-dom": "17.0.2"
+  },
+  "preinstall": "npm install --package-lock-only --ignore-scripts && npx npm-force-resolutions"
 }
