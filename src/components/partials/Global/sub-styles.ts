@@ -247,6 +247,9 @@ export const SubscribeForm = styled.form`
     width: 100%;
     gap: 2rem;
   }
+  @media (max-width: 450px) {
+    flex-direction: column;
+  }
 `;
 
 export const InputContainer = styled.div`

@@ -1,17 +1,28 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 
-import { Box, Grid, Text } from '@chakra-ui/react';
+import { Box, Grid, Link, Text } from '@chakra-ui/react';
+import {
+  CarouselProvider,
+  Slider,
+  Slide,
+  ButtonBack,
+  ButtonNext,
+} from 'pure-react-carousel';
 
 import BlogCard from '../components/partials/Blog/blog-card';
 import BlogCategory from '../components/partials/Blog/blogCategory';
+import None from '../components/partials/Global/None';
 import Sub from '../components/partials/Global/Sub';
 import config from '../config';
+import 'pure-react-carousel/dist/react-carousel.es.css';
 
 interface HomeProps {
   posts: any;
 }
 
 const Home: FC<HomeProps> = ({ posts }) => {
+  const [blogCategory, setBlogCategory] = useState('');
+
   return (
     <>
       <Box
@@ -20,30 +31,56 @@ const Home: FC<HomeProps> = ({ posts }) => {
         minH={'40vh'}
         bgImage={'url("/images/blog.png")'}
         p={'50px 0'}
+        pl={3}
       >
         <Box maxW={'1200px'} margin={'auto'}>
-          <Box background={'#ff9916'} w={'15vw'} p={1} color={'#fff'} mb={4}>
-            Category
-          </Box>
-          <Text
-            fontFamily={'DM Serif Display'}
-            fontWeight={400}
-            fontSize={'50px'}
-            lineHeight={'100%'}
-            color={'#ffffff'}
-            mb={4}
+          <CarouselProvider
+            naturalSlideWidth={100}
+            naturalSlideHeight={30}
+            totalSlides={posts?.length}
+            infinite={true}
+            interval={5000}
+            isPlaying={true}
           >
-            The best place to Have fun with loved ones this December
-          </Text>
-          <Box
-            bg={'#ff9916'}
-            p={3}
-            color={'#fff'}
-            borderRadius={'8px'}
-            w={'15vw'}
-          >
-            Read More
-          </Box>
+            <Slider>
+              {posts?.map((blog, i) => (
+                <Slide key={i} index={i}>
+                  <Box
+                    background={'#ff9916'}
+                    w={'180px'}
+                    p={1}
+                    color={'#fff'}
+                    mb={4}
+                  >
+                    {blog?.fields?.category}
+                  </Box>
+                  <Text
+                    fontFamily={'DM Serif Display'}
+                    fontWeight={400}
+                    fontSize={{ md: '50px', base: '30px' }}
+                    lineHeight={'100%'}
+                    color={'#ffffff'}
+                    mb={4}
+                  >
+                    {blog?.fields?.title}
+                  </Text>
+                  <Link href={`/blogs/${blog?.fields?.slug}`}>
+                    <Box
+                      bg={'#ff9916'}
+                      p={3}
+                      color={'#fff'}
+                      borderRadius={'8px'}
+                      w={'180px'}
+                    >
+                      Read More
+                    </Box>
+                  </Link>
+                </Slide>
+              ))}
+            </Slider>
+            <ButtonBack>Back</ButtonBack>
+            <ButtonNext>Next</ButtonNext>
+          </CarouselProvider>
         </Box>
       </Box>
       <Box
@@ -51,7 +88,7 @@ const Home: FC<HomeProps> = ({ posts }) => {
         boxShadow={'0px 2px 10px rgba(149, 157, 165, 0.2)'}
         borderRadius={'5px'}
         p={'35px 0'}
-        display={'flex'}
+        display={{ base: 'none', md: 'flex' }}
         alignItems={'center'}
         justifyContent={'center'}
       >
@@ -75,12 +112,12 @@ const Home: FC<HomeProps> = ({ posts }) => {
         <Text
           fontFamily={'DM Serif Display'}
           fontWeight={400}
-          fontSize={'50px'}
+          fontSize={{ md: '50px', base: '30px' }}
           lineHeight={'100%'}
           color={'#091c2e'}
           mb={4}
         >
-          Recent Posts
+          Recent Posts{blogCategory && `(${blogCategory})`}
         </Text>
         <Box
           width={'100%'}
@@ -104,22 +141,29 @@ const Home: FC<HomeProps> = ({ posts }) => {
             }}
             gap={5}
             placeItems={'center'}
+            p={2}
           >
-            {posts.map((blog, i) => (
-              <BlogCard
-                key={i}
-                slug={blog.fields.slug}
-                imgSrc={blog.fields.image}
-                title={blog.fields.title}
-                category={blog.fields.category}
-              />
-            ))}
+            {posts
+              ?.filter((el) => el?.fields?.category.includes(blogCategory))
+              .map((blog, i) => (
+                <BlogCard
+                  key={i}
+                  slug={blog.fields.slug}
+                  imgSrc={blog.fields.image}
+                  title={blog.fields.title}
+                  category={blog.fields.category}
+                />
+              ))}
           </Grid>
+          {posts?.filter((el) => el?.fields?.category.includes(blogCategory))
+            ?.length == 0 && (
+            <None noTop name={'Sorry, No blog posts on that category yet'} />
+          )}
         </Box>
         <Text
           fontFamily={'DM Serif Display'}
           fontWeight={400}
-          fontSize={'50px'}
+          fontSize={{ md: '50px', base: '30px' }}
           lineHeight={'100%'}
           color={'#091c2e'}
           mb={4}
@@ -127,9 +171,22 @@ const Home: FC<HomeProps> = ({ posts }) => {
         >
           Blog Categories
         </Text>
-        <Grid gap={4} mb={200} gridTemplateColumns={'repeat(4, 1fr)'}>
+        <Grid
+          p={2}
+          gap={4}
+          mb={200}
+          gridTemplateColumns={{
+            lg: 'repeat(4, 1fr)',
+            md: 'repeat(3, 1fr)',
+            sm: 'repeat(2, 1fr)',
+            base: 'repeat(1, 1fr)',
+          }}
+        >
           {blogCategories.map((category, idx) => (
             <BlogCategory
+              onClick={() => {
+                setBlogCategory(category);
+              }}
               key={idx}
               idx={idx}
               title={category}

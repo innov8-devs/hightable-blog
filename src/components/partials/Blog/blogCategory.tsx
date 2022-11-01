@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 
-import { Box, Circle, Flex, Text } from '@chakra-ui/react';
+import { Box, Circle, Flex, FlexProps, Text } from '@chakra-ui/react';
 
 interface BlogCategoryProps {
   img: string;
@@ -8,7 +8,12 @@ interface BlogCategoryProps {
   title: string;
 }
 
-const BlogCategory: FC<BlogCategoryProps> = ({ img, idx, title }) => {
+const BlogCategory: FC<BlogCategoryProps & FlexProps> = ({
+  img,
+  idx,
+  title,
+  ...props
+}) => {
   return (
     <Flex
       p={10}
@@ -20,6 +25,7 @@ const BlogCategory: FC<BlogCategoryProps> = ({ img, idx, title }) => {
       bgImage={img}
       alignItems={'center'}
       justifyContent={'center'}
+      {...props}
     >
       <Box>
         <Circle border={'1px solid #fff'} maxW={12} maxH={12} margin={'auto'}>
