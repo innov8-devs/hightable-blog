@@ -6,7 +6,7 @@ export const parseTree = (region, i) => {
   switch (region?.nodeType) {
     case 'paragraph':
       return (
-        <Text key={i}>
+        <Text m={4} key={i}>
           {region?.content?.map((el, i) => {
             return parseTree(el, i);
           })}
