@@ -1,4 +1,4 @@
-import { Heading, Link, Table, Td, Text, Tr } from '@chakra-ui/react';
+import { Heading, Image, Link, Table, Td, Text, Tr } from '@chakra-ui/react';
 
 export const parseTree = (region, i) => {
   const props: Record<string, any> = {};
@@ -76,6 +76,27 @@ export const parseTree = (region, i) => {
         <Link href={region?.data?.uri} {...props} color={'#FF9916'}>
           {region?.content?.map((val, j) => parseTree(val, j))}
         </Link>
+      );
+    case 'unordered-list':
+      return (
+        <ul style={{ margin: 20 }}>
+          {region?.content?.map((val, j) => parseTree(val, j))}
+        </ul>
+      );
+
+    case 'ordered-list':
+      return (
+        <ol style={{ margin: 20 }}>
+          {region?.content?.map((val, j) => parseTree(val, j))}
+        </ol>
+      );
+
+    case 'list-item':
+      return <li>{region?.content?.map((val, j) => parseTree(val, j))}</li>;
+
+    case 'embedded-asset-block':
+      return (
+        <Image alt="image" src={`https:${region?.image}`} maxW={'500px'} />
       );
   }
 };

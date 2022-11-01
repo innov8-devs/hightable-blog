@@ -86,6 +86,22 @@ export const getStaticProps = async ({ params }) => {
     article.image = image;
   }
 
+  let i = 0;
+  for (const val of article?.content?.content) {
+    if (val?.nodeType == 'embedded-asset-block') {
+      const assetId = article.content.content[i]?.data?.target?.sys?.id;
+      const image = (
+        await (
+          await fetch(
+            `${config.contentful.baseURL}/assets/${assetId}?access_token=${config.contentful.apiKey}`
+          )
+        ).json()
+      )?.fields?.file?.url;
+      article.content.content[i] = { ...article.content.content[i], image };
+    }
+    i++;
+  }
+
   return {
     props: {
       article,
