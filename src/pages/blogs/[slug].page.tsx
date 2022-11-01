@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { Box, Text, Image } from '@chakra-ui/react';
 
@@ -7,10 +7,6 @@ import config from '../../config';
 import { parseTree } from '../../utils/parseTree';
 
 const BlogArticle = ({ article }) => {
-  useEffect(() => {
-    console.log('article?.content', article?.content);
-  }, [article]);
-
   return (
     <div>
       <Box
