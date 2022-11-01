@@ -1,56 +1,58 @@
 import React, { FC } from 'react';
 
-import { Box, Text } from '@chakra-ui/react';
+import { Box, Link, Text } from '@chakra-ui/react';
 
 interface BlogCardProps {
   imgSrc: string;
   title: string;
+  slug: string;
+  category?: string;
 }
 
-const BlogCard: FC<BlogCardProps> = ({ imgSrc, title }) => {
+const BlogCard: FC<BlogCardProps> = ({
+  imgSrc,
+  title,
+  slug,
+  category = 'lifestyle',
+}) => {
   return (
     <Box
       borderRadius={'15px'}
       pos={'relative'}
-      w={'300px'}
+      w={'100%'}
       h={'300px'}
       flexShrink={0}
       flexGrow={0}
       flexBasis={'auto'}
       bgImage={imgSrc}
       overflow={'hidden'}
+      bgSize={'contain'}
       boxShadow={'0px 8px 20px 0.9px rgba(0, 0, 0, 0.12)'}
       mb={10}
     >
-      <Text
-        h={'4em'}
-        pos={'absolute'}
-        bottom={0}
-        p={4}
-        bgColor={'#fff'}
-        color={'#4B4B4B'}
-        fontSize={'20px'}
-        fontWeight={'600'}
-        display={'-webkit-box'}
-        style={{
-          WebkitLineClamp: 2,
-          WebkitBoxOrient: 'vertical',
-          textOverflow: 'ellipsis',
-          overflow: 'hidden',
-        }}
-      >
-        {title}
-      </Text>
-      <Box
-        pos={'absolute'}
-        p={2}
-        bg={'#091C2E'}
-        color={'#fff'}
-        top={0}
-        left={0}
-      >
-        300 Views
-      </Box>
+      <Link href={`/blogs/${slug}`}>
+        <Text
+          h={'4em'}
+          p={4}
+          bgColor={'#fff'}
+          color={'#4B4B4B'}
+          fontSize={'20px'}
+          fontWeight={'600'}
+          display={'-webkit-box'}
+          style={{
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: 'vertical',
+            textOverflow: 'ellipsis',
+            overflow: 'hidden',
+          }}
+          pos={'absolute'}
+          bottom={0}
+          width={'100%'}
+        >
+          {title}
+        </Text>
+      </Link>
+
       <Box
         pos={'absolute'}
         p={2}
@@ -58,8 +60,9 @@ const BlogCard: FC<BlogCardProps> = ({ imgSrc, title }) => {
         color={'#fff'}
         top={0}
         right={0}
+        textTransform={'capitalize'}
       >
-        Category
+        {category}
       </Box>
     </Box>
   );

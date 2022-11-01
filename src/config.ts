@@ -18,6 +18,12 @@ export const config = {
     LIVE: process.env.NEXT_PUBLIC_STRIPE_TEST,
     TEST: process.env.NEXT_PUBLIC_STRIPE_TEST,
   },
+  contentful: {
+    baseURL: `https://cdn.contentful.com/spaces/${process.env.NEXT_PUBLIC_CONTENTFUL_SPACE}/environments/master`,
+    apiKey: process.env.NEXT_PUBLIC_CONTENTFUL_KEY,
+    space: process.env.NEXT_PUBLIC_CONTENTFUL_SPACE,
+    environment: 'master',
+  },
 };
 
 export const authLink = setContext((_, { headers }) => {
