@@ -42,6 +42,10 @@ const Home: FC<HomeProps> = ({ posts }) => {
           property="og:description"
           content="Discover all the latest news, tips, trends and more in the hospitality world."
         />
+        <meta
+          property="og:image"
+          content="https://i.postimg.cc/7Ykc44Xx/Black-Hightable-with-tagline-1.png"
+        />
         <meta property="og:url" content="https://blog.hightable.africa/" />
         <meta property="og:site_name" content="HighTable Africa" />
         <meta name="twitter:card" content="summary_large_image" />

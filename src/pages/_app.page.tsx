@@ -27,15 +27,6 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Head>
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://hightable.africa/" />
-        <meta property="og:title" content="HighTable" />
-        <meta
-          property="og:image"
-          content="https://i.postimg.cc/7Ykc44Xx/Black-Hightable-with-tagline-1.png"
-        />
-        <meta
-          property="og:description"
-          content="HighTable Africa - Experience Africa like never before! Discover restaurants, nightlife, hotels, attractions, and activities across Africa.  With HighTable, you can plan your next trip, read honest and reliable peer reviews, make reservations, connect with communities, and more. "
-        />
         <link
           rel="apple-touch-icon"
           sizes="180x180"
