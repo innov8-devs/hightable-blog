@@ -16,6 +16,7 @@ const BlogArticle = ({ article }) => {
         <meta property="og:type" content="website" />
         <meta property="og:title" content={article?.title} />
         <meta property="og:description" content={article?.previewDescription} />
+        <meta name="keywords" content={article?.metaTags?.join(', ')} />
         <meta
           property="og:url"
           content={`https://blog.hightable.africa/blogs/${article?.slug}`}
