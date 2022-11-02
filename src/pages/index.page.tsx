@@ -1,6 +1,7 @@
 import React, { FC, useState } from 'react';
 
 import { Box, Grid, Link, Text } from '@chakra-ui/react';
+import Head from 'next/head';
 import {
   CarouselProvider,
   Slider,
@@ -14,6 +15,7 @@ import BlogCategory from '../components/partials/Blog/blogCategory';
 import None from '../components/partials/Global/None';
 import Sub from '../components/partials/Global/Sub';
 import config from '../config';
+
 import 'pure-react-carousel/dist/react-carousel.es.css';
 
 interface HomeProps {
@@ -25,6 +27,35 @@ const Home: FC<HomeProps> = ({ posts }) => {
 
   return (
     <>
+      <Head>
+        <meta
+          name="description"
+          content="Discover all the latest news, tips, trends and more in the hospitality world."
+        />
+        <meta property="og:locale" content="en_US" />
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:title"
+          content="HighTable Blog - News, Tips and Advice from global hospitality, travel etc trends."
+        />
+        <meta
+          property="og:description"
+          content="Discover all the latest news, tips, trends and more in the hospitality world."
+        />
+        <meta property="og:url" content="https://blog.hightable.africa/" />
+        <meta property="og:site_name" content="HighTable Africa" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+          name="twitter:title"
+          content="HighTable Blog - News, Tips and Advice from global hospitality, travel etc trends."
+        />
+        <meta
+          name="twitter:description"
+          content="Discover all the latest news, tips, trends and more in the hospitality world."
+        />
+        <meta name="twitter:image" content={`/images/hightable.png`} />
+        <meta name="theme-color" content="#FF9916" />
+      </Head>
       <Box
         width={'100%'}
         bgSize={'cover'}

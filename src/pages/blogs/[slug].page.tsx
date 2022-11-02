@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Box, Text, Image } from '@chakra-ui/react';
+import Head from 'next/head';
 
 import Sub from '../../components/partials/Global/Sub';
 import config from '../../config';
@@ -8,61 +9,80 @@ import { parseTree } from '../../utils/parseTree';
 
 const BlogArticle = ({ article }) => {
   return (
-    <div>
-      <Box
-        width={'100%'}
-        bgSize={'cover'}
-        minH={'40vh'}
-        bgImage={'url("/images/blog.png")'}
-        p={'50px 0'}
-      >
-        <Box maxW={'1200px'} margin={'auto'}>
-          <Box
-            textTransform={'capitalize'}
-            background={'#ff9916'}
-            w={'15vw'}
-            p={1}
-            color={'#fff'}
-            mb={4}
-          >
-            {article?.category}
+    <>
+      <Head>
+        <meta name="description" content={article?.previewText} />
+        <meta property="og:locale" content="en_US" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={article?.title} />
+        <meta property="og:description" content={article?.previewText} />
+        <meta
+          property="og:url"
+          content={`https://blog.hightable.africa/blogs/${article?.slug}`}
+        />
+        <meta property="og:site_name" content="HighTable Africa" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={article?.title} />
+        <meta name="twitter:description" content={article?.previewText} />
+        <meta name="twitter:image" content={`https:${article?.image}`} />
+        <meta name="theme-color" content="#FF9916" />
+      </Head>
+      <div>
+        <Box
+          width={'100%'}
+          bgSize={'cover'}
+          minH={'40vh'}
+          bgImage={'url("/images/blog.png")'}
+          p={'50px 0'}
+        >
+          <Box maxW={'1200px'} margin={'auto'}>
+            <Box
+              textTransform={'capitalize'}
+              background={'#ff9916'}
+              w={'15vw'}
+              p={1}
+              color={'#fff'}
+              mb={4}
+            >
+              {article?.category}
+            </Box>
+            <Text
+              fontFamily={'DM Serif Display'}
+              fontWeight={400}
+              fontSize={'50px'}
+              lineHeight={'100%'}
+              color={'#ffffff'}
+              mb={4}
+            >
+              {article?.title}
+            </Text>
           </Box>
+        </Box>
+        <Box maxW={'1200px'} margin={'auto'}>
           <Text
             fontFamily={'DM Serif Display'}
             fontWeight={400}
             fontSize={'50px'}
             lineHeight={'100%'}
-            color={'#ffffff'}
+            color={'#000'}
             mb={4}
+            mt={15}
           >
             {article?.title}
           </Text>
+          <Image
+            maxW={'50%'}
+            src={`https:${article?.image}`}
+            mt={10}
+            mb={6}
+            alt="heroImg"
+          />
+          {article?.content?.content?.map((region, i) => parseTree(region, i))}
+          <Box h={100} />
+          <Sub />
         </Box>
-      </Box>
-      <Box maxW={'1200px'} margin={'auto'}>
-        <Text
-          fontFamily={'DM Serif Display'}
-          fontWeight={400}
-          fontSize={'50px'}
-          lineHeight={'100%'}
-          color={'#000'}
-          mb={4}
-          mt={15}
-        >
-          {article?.title}
-        </Text>
-        <Image
-          maxW={'50%'}
-          src={`https:${article?.image}`}
-          mt={10}
-          mb={6}
-          alt="heroImg"
-        />
-        {article?.content?.content?.map((region, i) => parseTree(region, i))}
-        <Box h={100} />
-        <Sub />
-      </Box>
-    </div>
+      </div>
+    </>
   );
 };
 
