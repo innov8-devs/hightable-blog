@@ -11,11 +11,11 @@ const BlogArticle = ({ article }) => {
   return (
     <>
       <Head>
-        <meta name="description" content={article?.previewText} />
+        <meta name="description" content={article?.previewDescription} />
         <meta property="og:locale" content="en_US" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content={article?.title} />
-        <meta property="og:description" content={article?.previewText} />
+        <meta property="og:description" content={article?.previewDescription} />
         <meta
           property="og:url"
           content={`https://blog.hightable.africa/blogs/${article?.slug}`}
@@ -23,7 +23,10 @@ const BlogArticle = ({ article }) => {
         <meta property="og:site_name" content="HighTable Africa" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={article?.title} />
-        <meta name="twitter:description" content={article?.previewText} />
+        <meta
+          name="twitter:description"
+          content={article?.previewDescription}
+        />
         <meta name="twitter:image" content={`https:${article?.image}`} />
         <meta name="theme-color" content="#FF9916" />
       </Head>
