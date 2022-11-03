@@ -212,7 +212,7 @@ const Home: FC<HomeProps> = ({ posts }) => {
           {blogCategories.map((category, idx) => (
             <BlogCategory
               onClick={() => {
-                setBlogCategory(category);
+                setBlogCategory(category == 'Featured' ? '' : category);
               }}
               key={idx}
               idx={idx}
