@@ -35,7 +35,7 @@ const BlogArticle = ({ article }) => {
         <Box
           width={'100%'}
           bgSize={'cover'}
-          minH={'40vh'}
+          minH={{ base: '30vh', lg: '40vh' }}
           bgImage={'url("/images/blog.png")'}
           p={'50px 0'}
         >
@@ -43,7 +43,7 @@ const BlogArticle = ({ article }) => {
             <Box
               textTransform={'capitalize'}
               background={'#ff9916'}
-              w={'15vw'}
+              w={'180px'}
               p={1}
               color={'#fff'}
               mb={4}
@@ -53,7 +53,7 @@ const BlogArticle = ({ article }) => {
             <Text
               fontFamily={'DM Serif Display'}
               fontWeight={400}
-              fontSize={'50px'}
+              fontSize={{ lg: '50px', md: '40px', base: '30px' }}
               lineHeight={'100%'}
               color={'#ffffff'}
               mb={4}
@@ -62,11 +62,11 @@ const BlogArticle = ({ article }) => {
             </Text>
           </Box>
         </Box>
-        <Box maxW={'1200px'} margin={'auto'}>
+        <Box maxW={'744px'} ml={2} margin={'auto'}>
           <Text
             fontFamily={'DM Serif Display'}
             fontWeight={400}
-            fontSize={'50px'}
+            fontSize={{ lg: '50px', md: '38px', base: '29px' }}
             lineHeight={'100%'}
             color={'#000'}
             mb={4}
@@ -74,17 +74,23 @@ const BlogArticle = ({ article }) => {
           >
             {article?.title}
           </Text>
-          <Image
-            maxW={'50%'}
-            src={`https:${article?.image}`}
-            mt={10}
-            mb={6}
-            alt="heroImg"
-          />
+          <Text fontSize={14} fontWeight={400} color={'#000000ac'}>
+            Published on {article?.publishedAt}
+          </Text>
+        </Box>
+        <Image
+          maxW={'min(1000px, 100%)'}
+          marginInline={'auto'}
+          src={`https:${article?.image}`}
+          mt={10}
+          mb={6}
+          alt="heroImg"
+        />
+        <Box maxW={'744px'} margin={'auto'}>
           {article?.content?.content?.map((region, i) => parseTree(region, i))}
           <Box h={100} />
-          <Sub />
         </Box>
+        <Sub />
       </div>
     </>
   );
@@ -98,7 +104,7 @@ export const getStaticProps = async ({ params }) => {
   ).json();
 
   const article = entry?.items[0]?.fields;
-  if (article) {
+  if (article?.heroImage?.sys?.id) {
     const assetId = article?.heroImage?.sys?.id;
     const image = (
       await (
@@ -123,8 +129,25 @@ export const getStaticProps = async ({ params }) => {
       )?.fields?.file?.url;
       article.content.content[i] = { ...article.content.content[i], image };
     }
+    if (val?.nodeType == 'embedded-entry-block') {
+      const assetId = article.content.content[i]?.data?.target?.sys?.id;
+      const entry = await (
+        await fetch(
+          `${config.contentful.baseURL}/entries/${assetId}?access_token=${config.contentful.apiKey}`
+        )
+      ).json();
+      article.content.content[i] = {
+        ...article.content.content[i],
+        entry: entry?.fields,
+        entryType: entry?.sys?.contentType?.sys?.id,
+      };
+    }
     i++;
   }
+
+  article.publishedAt = new Date(
+    entry?.items[0]?.sys?.createdAt
+  ).toDateString();
 
   return {
     props: {
@@ -136,12 +159,15 @@ export const getStaticProps = async ({ params }) => {
 
 export async function getStaticPaths() {
   const res = await fetch(
-    `${config.contentful.baseURL}/entries?access_token=${config.contentful.apiKey}`
+    `${config.contentful.baseURL}/entries?access_token=${config.contentful.apiKey}&content_type=blogPost`
   );
   const posts = (await res.json())?.items || [];
-  const paths = posts.map(({ fields: { slug } }) => ({
-    params: { slug: `${slug}` },
-  }));
+  const paths = posts.map(
+    ({ fields: { slug } }) =>
+      slug && {
+        params: { slug: `${slug}` },
+      }
+  );
   return {
     paths,
     fallback: true,

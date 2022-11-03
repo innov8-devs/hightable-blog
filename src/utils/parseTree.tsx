@@ -1,4 +1,13 @@
-import { Heading, Image, Link, Table, Td, Text, Tr } from '@chakra-ui/react';
+import {
+  Button,
+  Heading,
+  Image,
+  Link,
+  Table,
+  Td,
+  Text,
+  Tr,
+} from '@chakra-ui/react';
 
 export const parseTree = (region, i) => {
   const props: Record<string, any> = {};
@@ -95,8 +104,22 @@ export const parseTree = (region, i) => {
       return <li>{region?.content?.map((val, j) => parseTree(val, j))}</li>;
 
     case 'embedded-asset-block':
-      return (
-        <Image alt="image" src={`https:${region?.image}`} maxW={'500px'} />
-      );
+      return <Image alt="image" src={`https:${region?.image}`} w={'100%'} />;
+
+    case 'embedded-entry-block':
+      if (region?.entryType == 'button') {
+        return (
+          <Link
+            textDecoration={'none'}
+            href={region?.entry?.url ?? '#'}
+            target={region?.entry?.url ? '_blank' : '_self'}
+            m={4}
+          >
+            <Button bg={region?.entry?.color ?? '#FF9916'} p={5} m={4} ml={0}>
+              {region?.entry?.value}
+            </Button>
+          </Link>
+        );
+      }
   }
 };

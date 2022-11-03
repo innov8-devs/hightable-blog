@@ -2,13 +2,7 @@ import React, { FC, useState } from 'react';
 
 import { Box, Grid, Link, Text } from '@chakra-ui/react';
 import Head from 'next/head';
-import {
-  CarouselProvider,
-  Slider,
-  Slide,
-  ButtonBack,
-  ButtonNext,
-} from 'pure-react-carousel';
+import { CarouselProvider, Slider, Slide } from 'pure-react-carousel';
 
 import BlogCard from '../components/partials/Blog/blog-card';
 import BlogCategory from '../components/partials/Blog/blogCategory';
@@ -63,15 +57,15 @@ const Home: FC<HomeProps> = ({ posts }) => {
       <Box
         width={'100%'}
         bgSize={'cover'}
-        minH={'40vh'}
+        h={'40vh'}
         bgImage={'url("/images/blog.png")'}
         p={'50px 0'}
         pl={3}
       >
-        <Box maxW={'1200px'} margin={'auto'}>
+        <Box maxW={'1200px'} margin={'auto'} height={'100%'}>
           <CarouselProvider
             naturalSlideWidth={100}
-            naturalSlideHeight={30}
+            naturalSlideHeight={100}
             totalSlides={posts?.length}
             infinite={true}
             interval={5000}
@@ -113,8 +107,6 @@ const Home: FC<HomeProps> = ({ posts }) => {
                 </Slide>
               ))}
             </Slider>
-            <ButtonBack>Back</ButtonBack>
-            <ButtonNext>Next</ButtonNext>
           </CarouselProvider>
         </Box>
       </Box>
@@ -179,18 +171,18 @@ const Home: FC<HomeProps> = ({ posts }) => {
             p={2}
           >
             {posts
-              ?.filter((el) => el?.fields?.category.includes(blogCategory))
+              ?.filter((el) => el?.fields?.category?.includes(blogCategory))
               .map((blog, i) => (
                 <BlogCard
                   key={i}
                   slug={blog.fields.slug}
-                  imgSrc={blog.fields.image}
+                  imgSrc={blog?.fields?.image}
                   title={blog.fields.title}
                   category={blog.fields.category}
                 />
               ))}
           </Grid>
-          {posts?.filter((el) => el?.fields?.category.includes(blogCategory))
+          {posts?.filter((el) => el?.fields?.category?.includes(blogCategory))
             ?.length == 0 && (
             <None noTop name={'Sorry, No blog posts on that category yet'} />
           )}
@@ -239,24 +231,33 @@ export default Home;
 
 export const getStaticProps = async () => {
   const res = await fetch(
-    `${config.contentful.baseURL}/entries?access_token=${config.contentful.apiKey}`
+    `${config.contentful.baseURL}/entries?access_token=${config.contentful.apiKey}&content_type=blogPost`
   );
   const posts = (await res.json())?.items || [];
 
   let i = 0;
   for (const post of posts) {
     const assetId = post?.fields?.heroImage?.sys?.id;
-    const image = (
-      await (
-        await fetch(
-          `${config.contentful.baseURL}/assets/${assetId}?access_token=${config.contentful.apiKey}`
-        )
-      ).json()
-    )?.fields?.file?.url;
-    posts[i] = {
-      ...post,
-      fields: { ...post.fields, image },
-    };
+    if (assetId) {
+      const image = (
+        await (
+          await fetch(
+            `${config.contentful.baseURL}/assets/${assetId}?access_token=${config.contentful.apiKey}`
+          )
+        ).json()
+      )?.fields?.file?.url;
+      if (image) {
+        posts[i] = {
+          ...post,
+          fields: { ...post.fields, image },
+        };
+      }
+    } else {
+      posts[i] = {
+        ...post,
+        fields: { ...post.fields, image: '/images/blog.png' },
+      };
+    }
     i++;
   }
 
